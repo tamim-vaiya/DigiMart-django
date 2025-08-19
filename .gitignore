@@ -1,0 +1,12 @@
+# Ignore virtual environment folder
+digimart_venv/
+
+# Ignore Python cache files
+**/__pycache__/
+*.pyc
+
+# Ignore SQLite DB
+db.sqlite3
+
+# Ignore node_modules
+node_modules
