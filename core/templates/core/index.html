@@ -16,7 +16,7 @@
                 <p class="text-green-600 font-bold mt-2">${{ product.price }}</p>
 
                 <!-- Button -->
-                <a href="" 
+                <a href="{% url 'detail' product.id %}" 
                    class="inline-block mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
                    View Details
                 </a>
