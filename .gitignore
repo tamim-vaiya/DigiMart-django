@@ -12,4 +12,6 @@ db.sqlite3
 node_modules
 
 # Ignore media
-uploads/
+uploads/*
+# But don’t ignore the folder itself
+!uploads/.gitkeep
