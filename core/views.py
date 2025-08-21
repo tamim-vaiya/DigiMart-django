@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, OrderDetail
 from django.conf import settings
 import stripe, json
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -40,3 +41,12 @@ def create_checkout_session(request, id):
         "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url= request.build_absolute_uri(reverse('failed')),
     )
+
+    order = OrderDetail()
+    order.customer_email = request_data['email']
+    order.product = product
+    order.stripe_payment_intent = checkout_session['payment_intent']
+    order.amount = int(product.price)
+    order.save()
+
+    return JsonResponse({'session_id':checkout_session.id})
