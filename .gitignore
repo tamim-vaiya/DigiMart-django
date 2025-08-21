@@ -1,6 +1,9 @@
 # Ignore virtual environment folder
 digimart_venv/
 
+# Ignore enviroment file
+.env
+
 # Ignore Python cache files
 **/__pycache__/
 *.pyc
