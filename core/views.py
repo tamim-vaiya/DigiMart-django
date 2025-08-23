@@ -62,3 +62,6 @@ def payment_success_view(request):
     order.save()
 
     return render(request, 'core/payment_success.html', {'order': order})
+
+def payment_failed_view(request):
+    return render(request, 'core/failed.html')
