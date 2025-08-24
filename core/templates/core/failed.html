@@ -1,1 +1,21 @@
-Payment Failed!
+{% extends "base.html" %}
+
+{% block body %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50">
+    <div class="bg-white shadow-lg rounded-2xl p-10 text-center">
+        
+        <!-- Success message -->
+        <h1 class="text-3xl md:text-4xl font-bold text-red-600 mb-6">
+            Payment Failed!
+        </h1>
+        
+        <!-- Download button -->
+        <a href="{% url 'index' %}" 
+           download
+           class="inline-block px-6 py-3 bg-indigo-600 text-white text-lg font-semibold rounded-lg shadow-md 
+                  hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5 transition">
+            Go Back to Index Page
+        </a>
+    </div>
+</div>
+{% endblock body %}
