@@ -5,6 +5,7 @@ import stripe, json
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseNotFound
+from .forms import ProductForm
 
 # Create your views here.
 def index(request):
@@ -67,3 +68,7 @@ def payment_success_view(request):
 
 def payment_failed_view(request):
     return render(request, 'core/failed.html')
+
+def create_product(request):
+    product_form = ProductForm() 
+    return render(request, 'core/create_product.html', {'product_form': product_form})

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session
+from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session, create_product
 
 urlpatterns = [
     path('', index, name='index'),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('success/', payment_success_view, name='success'),
     path('failed/', payment_failed_view, name='failed'),
     path('api/checkout-session/<int:id>/', create_checkout_session, name='api_checkout_session'),
+    path('create-product/', create_product, name='create_product'),
 ]
