@@ -32,12 +32,12 @@
         </div>
     </div>
 </div>
-<script src="https://js.stripe.com/basil/stripe.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">
     var stripe = Stripe('{{ stripe_publishable_key }}')
     var checkoutButton = document.getElementById('checkout-button')
     checkoutButton.addEventListener('click', function(){
-        var email = document.getElementById('myemail').innerText
+        var email = document.getElementById('myemail').innerText.trim()
         if (email.length == 0){
             alert("Email not found")
             return
@@ -48,7 +48,7 @@
         }).then(function(response){
             return response.json()
         }).then(function(session){
-            return stripe.redirectToCheckout({sessionID:session.sessionID})
+            return stripe.redirectToCheckout({sessionId:session.session_id})
         }).then(function(result){
             if(result.error){
                 alert(result.error.message)
