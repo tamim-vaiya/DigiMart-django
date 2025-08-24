@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, OrderDetail
 from django.conf import settings
 import stripe, json
@@ -70,5 +70,10 @@ def payment_failed_view(request):
     return render(request, 'core/failed.html')
 
 def create_product(request):
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            new_product = product_form.save()
+            return redirect('index')
     product_form = ProductForm() 
     return render(request, 'core/create_product.html', {'product_form': product_form})
