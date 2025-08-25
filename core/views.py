@@ -77,3 +77,8 @@ def create_product(request):
             return redirect('index')
     product_form = ProductForm() 
     return render(request, 'core/create_product.html', {'product_form': product_form})
+
+def product_edit(request, id):
+    product = Product.objects.get(id=id)
+    product_form = ProductForm(request.POST or None, request.FILES or None,instance=product)
+    return render(request, 'core/product_edit.html', {'product_form': product_form})
