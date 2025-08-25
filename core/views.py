@@ -81,4 +81,8 @@ def create_product(request):
 def product_edit(request, id):
     product = Product.objects.get(id=id)
     product_form = ProductForm(request.POST or None, request.FILES or None,instance=product)
+    if request.method == 'POST':
+        if product_form.is_valid():
+            product_form.save()
+            return redirect('index')
     return render(request, 'core/product_edit.html', {'product_form': product_form})
