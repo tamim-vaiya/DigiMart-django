@@ -28,7 +28,13 @@
             <a href="" class="hover:text-indigo-600">Orders</a>
             <a href="{% url 'create_product' %}" class="hover:text-indigo-600">Create Product</a>
             <a href="" class="hover:text-indigo-600">My Purchases</a>
-            <a href="" class="hover:text-red-600">Logout</a>
+            <!-- Logout -->
+            <form method="POST" action="{% url 'logout' %}" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="hover:text-red-600 bg-transparent border-none p-0 m-0 cursor-pointer font-bold">
+                    Logout
+                </button>
+            </form>
         </div>
     </nav>
 
