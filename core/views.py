@@ -5,7 +5,7 @@ import stripe, json
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseNotFound
-from .forms import ProductForm
+from .forms import ProductForm, UserRagistrationForm
 from django.db.models import Sum, Count, Q
 
 # Create your views here.
@@ -101,3 +101,8 @@ def dashboard(request):
         total_earnings=Sum('orderdetail__amount', filter=Q(orderdetail__has_paid=True))
     )
     return render(request, 'core/dashboard.html', {'products': products})
+
+
+def register(request):
+    user_form = UserRagistrationForm()
+    return render(request, 'core/register.html', {'user_form': user_form})

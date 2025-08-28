@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form method="POST">
+        {{ user_form.as_p }}
+        <button type="submit"
+            class="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md 
+                   hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5 transition">
+            Register
+        </button>
+    </form>
+{% endblock body %}
