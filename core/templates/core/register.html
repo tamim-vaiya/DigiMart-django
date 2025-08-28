@@ -1,13 +1,75 @@
 {% extends "base.html" %}
 
 {% block body %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        <button type="submit"
-            class="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md 
-                   hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5 transition">
-            Register
-        </button>
-    </form>
+<div class="flex justify-center items-center min-h-screen ">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create an Account</h2>
+
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div>
+                <label for="{{ user_form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    Username
+                </label>
+                {{ user_form.username }}
+                {% if user_form.username.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ user_form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="{{ user_form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    Email
+                </label>
+                {{ user_form.email }}
+                {% if user_form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ user_form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- First Name -->
+            <div>
+                <label for="{{ user_form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    First Name
+                </label>
+                {{ user_form.first_name }}
+                {% if user_form.first_name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ user_form.first_name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label for="{{ user_form.password.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    Password
+                </label>
+                {{ user_form.password }}
+                {% if user_form.password.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ user_form.password.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label for="{{ user_form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                    Confirm Password
+                </label>
+                {{ user_form.password2 }}
+                {% if user_form.password2.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ user_form.password2.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full mt-6 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md 
+                       hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5 transition">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock body %}
