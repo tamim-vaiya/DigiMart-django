@@ -83,6 +83,8 @@ def create_product(request):
 
 def product_edit(request, id):
     product = Product.objects.get(id=id)
+    if product.seller != request.user:
+        return redirect('invalid')
     product_form = ProductForm(request.POST or None, request.FILES or None,instance=product)
     if request.method == 'POST':
         if product_form.is_valid():
@@ -92,13 +94,15 @@ def product_edit(request, id):
 
 def product_delete(request, id):
     product = Product.objects.get(id=id)
+    if product.seller != request.user:
+        return redirect('invalid')
     if request.method == 'POST':
         product.delete()
         return redirect('index')
     return render(request, 'core/product_delete.html', {'product': product})
 
 def dashboard(request):
-    products = Product.objects.all().annotate(
+    products = Product.objects.filter(seller=request.user).annotate(
         total_orders=Count('orderdetail', filter=Q(orderdetail__has_paid=True)),
         total_earnings=Sum('orderdetail__amount', filter=Q(orderdetail__has_paid=True))
     )
@@ -115,3 +119,6 @@ def register(request):
             return redirect('index')
     user_form = UserRagistrationForm()
     return render(request, 'core/register.html', {'user_form': user_form})
+
+def invalid_response(request):
+    return render(request, 'core/invalid.html')

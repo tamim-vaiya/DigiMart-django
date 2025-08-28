@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session, create_product, product_edit, product_delete, dashboard, register
+from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session, create_product, product_edit, product_delete, dashboard, register, invalid_response
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='core/logout.html'), name='logout'),
+    path('invalid/', invalid_response, name='invalid'),
 ]
