@@ -18,15 +18,15 @@
                 <circle cx="9" cy="20" r="1.5"/>
                 <circle cx="18" cy="20" r="1.5"/>
             </svg>
-            <span class="text-2xl font-bold text-gray-700">DigiMart</span>
+            <a href="{% url 'index' %}"><span class="text-2xl font-bold text-gray-700">DigiMart</span></a>
         </div>
 
         <!-- Right: Links -->
         <div class="flex space-x-6 text-gray-700 font-bold">
-            <a href="" class="hover:text-indigo-600">Dashboard</a>
+            <a href="{% url 'dashboard' %}" class="hover:text-indigo-600">Dashboard</a>
             <a href="" class="hover:text-indigo-600">Sales</a>
             <a href="" class="hover:text-indigo-600">Orders</a>
-            <a href="" class="hover:text-indigo-600">Create Product</a>
+            <a href="{% url 'create_product' %}" class="hover:text-indigo-600">Create Product</a>
             <a href="" class="hover:text-indigo-600">My Purchases</a>
             <a href="" class="hover:text-red-600">Logout</a>
         </div>

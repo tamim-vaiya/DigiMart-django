@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponseNotFound
 from .forms import ProductForm
+from django.db.models import Sum, Count, Q
 
 # Create your views here.
 def index(request):
@@ -93,3 +94,10 @@ def product_delete(request, id):
         product.delete()
         return redirect('index')
     return render(request, 'core/product_delete.html', {'product': product})
+
+def dashboard(request):
+    products = Product.objects.all().annotate(
+        total_orders=Count('orderdetail', filter=Q(orderdetail__has_paid=True)),
+        total_earnings=Sum('orderdetail__amount', filter=Q(orderdetail__has_paid=True))
+    )
+    return render(request, 'core/dashboard.html', {'products': products})

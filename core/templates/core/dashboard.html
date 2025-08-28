@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container mx-auto px-6 py-10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">My Products</h1>
+        <a href="{% url 'create_product' %}"
+           class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg shadow-md transition">
+           + Create Product
+        </a>
+    </div>
+
+    <!-- Product Table -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-100 text-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left">Product</th>
+                    <th class="px-6 py-3 text-center">Earnings</th>
+                    <th class="px-6 py-3 text-center">Orders</th>
+                    <th class="px-6 py-3 text-center">Rating</th>
+                    <th class="px-6 py-3 text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for product in products %}
+                <tr class="hover:bg-gray-50">
+                    <!-- Product Info -->
+                    <td class="px-6 py-4 flex items-center space-x-4">
+                        <img src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png" alt="No Image" class="w-16 h-16 rounded-lg object-cover border">
+                        <div>
+                            <p class="font-semibold text-gray-800">{{ product.name }}</p>
+                            <p class="text-sm text-gray-500">${{ product.price }}</p>
+                        </div>
+                    </td>
+
+                    <!-- Earnings -->
+                    <td class="px-6 py-4 text-center font-medium text-gray-800">
+                        ${{ product.total_earnings|default:0 }}
+                    </td>
+
+                    <!-- Orders -->
+                    <td class="px-6 py-4 text-center text-gray-700">
+                        {{ product.total_orders }}
+                    </td>
+
+                    <!-- Rating -->
+                    <td class="px-6 py-4 text-center text-yellow-500 font-semibold">
+                        ⭐ 4.8
+                    </td>
+
+                    <!-- Actions -->
+                    <td class="px-6 py-4 text-center space-x-3">
+                        <a href="{% url 'product_edit' product.id %}"
+                           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md shadow">
+                           Edit
+                        </a>
+                        <a href="{% url 'product_delete' product.id %}"
+                           class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-6 py-6 text-center text-gray-500">
+                        No products yet. <a href="{% url 'create_product' %}" class="text-indigo-600 hover:underline">Create one</a>.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}
