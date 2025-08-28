@@ -122,3 +122,7 @@ def register(request):
 
 def invalid_response(request):
     return render(request, 'core/invalid.html')
+
+def my_purchases(request):
+    orders = OrderDetail.objects.all()
+    return render(request, 'core/my_purchases.html', {'orders':orders})

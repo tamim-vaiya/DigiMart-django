@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container mx-auto px-6 py-10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">My Purchases</h1>
+    </div>
+
+    <!-- Product Table -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-100 text-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left">Product Name</th>
+                    <th class="px-6 py-3 text-center">Amount Paid</th>
+                    <th class="px-6 py-3 text-center">Order Date</th>
+                    <th class="px-6 py-3 text-center">Download Link</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for order in orders %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-gray-800">{{ order.product.name }}</td>
+                    <td class="px-6 py-4 text-center text-gray-700">${{ order.amount }}</td>
+                    <td class="px-6 py-4 text-center text-gray-600">
+                        {{ order.created_on|date:"M d, Y H:i" }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {% if order.has_paid %}
+                            <a href="{{ order.product.file.url }}" 
+                               class="text-indigo-600 hover:underline font-medium">
+                                Download
+                            </a>
+                        {% else %}
+                            <span class="text-gray-400 italic">Pending Payment</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="px-6 py-6 text-center text-gray-500">
+                        No products yet. 
+                        <a href="{% url 'create_product' %}" class="text-indigo-600 hover:underline">
+                            Create one
+                        </a>.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock body %}
