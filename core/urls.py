@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session, create_product, product_edit, product_delete, dashboard, register, invalid_response, my_purchases
+from .views import index, detail, payment_success_view, payment_failed_view, create_checkout_session, create_product, product_edit, product_delete, dashboard, register, invalid_response, my_purchases, sales
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='core/logout.html'), name='logout'),
     path('invalid/', invalid_response, name='invalid'),
     path('my-purchases/', my_purchases, name='my_purchases'),
+    path('sales/', sales, name='sales'),
 ]

@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.http import JsonResponse, HttpResponseNotFound
 from .forms import ProductForm, UserRagistrationForm
 from django.db.models import Sum, Count, Q
+import datetime
 
 # Create your views here.
 def index(request):
@@ -126,3 +127,30 @@ def invalid_response(request):
 def my_purchases(request):
     orders = OrderDetail.objects.all()
     return render(request, 'core/my_purchases.html', {'orders':orders})
+
+def sales(request):
+    orders = OrderDetail.objects.filter(product__seller=request.user, has_paid=True)
+    total_sales = orders.aggregate(Sum('amount'))
+
+    # weekly sales sum
+    last_week = datetime.date.today() - datetime.timedelta(days=7)
+    orders = OrderDetail.objects.filter(product__seller=request.user, has_paid=True, created_on__gt=last_week)
+    weekly_sales = orders.aggregate(Sum('amount'))
+
+    # monthly sales sum
+    today = datetime.date.today() - datetime.timedelta(days=30)
+    orders = OrderDetail.objects.filter(product__seller=request.user, has_paid=True, created_on__year=today.year, created_on__month=today.month)
+    monthly_sales = orders.aggregate(Sum('amount'))
+
+    # 365 day sales sum
+    last_year = datetime.date.today() - datetime.timedelta(days=365)
+    orders = OrderDetail.objects.filter(product__seller=request.user, has_paid=True, created_on__gt=last_year)
+    yearly_sales = orders.aggregate(Sum('amount'))
+
+    # Everyday sum for the last 30 days
+    daily_sales_sum = OrderDetail.objects.filter(product__seller=request.user, has_paid=True).values('created_on__date').order_by('created_on__date').annotate(total=Sum('amount'))
+    
+    # Product sales sum for the last 30 days
+    product_sales_sum = OrderDetail.objects.filter(product__seller=request.user, has_paid=True).values('product__name').order_by('product__name').annotate(total=Sum('amount'))
+
+    return render(request, 'core/sales.html', {'total_sales': total_sales, 'yearly_sales': yearly_sales, 'monthly_sales': monthly_sales, 'weekly_sales': weekly_sales, 'daily_sales_sum':daily_sales_sum, 'product_sales_sum': product_sales_sum})
